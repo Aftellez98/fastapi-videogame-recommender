@@ -1,0 +1,16 @@
+# Run fastapi on local
+uvicorn app:app --reload
+
+# Log in to ECR
+aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 451049620221.dkr.ecr.us-east-1.amazonaws.com
+
+# Build project image
+docker build -t videogame-recom-system-fast-api .
+
+# Tag image
+docker tag videogame-recom-system-fast-api:latest 451049620221.dkr.ecr.us-east-1.amazonaws.com/videogame-recom-system-fast-api:latest
+
+# Push image to ECR
+docker push 451049620221.dkr.ecr.us-east-1.amazonaws.com/videogame-recom-system-fast-api:latest
+The push refers to repository [451049620221.dkr.ecr.us-east-1.amazonaws.com/videogame-recom-system-fast-api]
+
