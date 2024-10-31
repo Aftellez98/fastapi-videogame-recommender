@@ -1,11 +1,14 @@
-from fastapi import FastAPI
 import pandas as pd
 import pickle
 import uvicorn
+
+from fastapi import FastAPI
 from mangum import Mangum
+
 
 app = FastAPI()
 handler = Mangum(app)
+
 
 @app.get("/predictvideogames")
 def recommend_games(user_id: int, n_recommendations: int = 5, percentiles:bool = False):
@@ -34,6 +37,7 @@ def recommend_games(user_id: int, n_recommendations: int = 5, percentiles:bool =
     # Returns the names (ids) of the top n_recommendations games
     return [pred.iid for pred in ranked_games]
 
+
 @app.get("/users")
 def get_user_ids():
    
@@ -41,6 +45,7 @@ def get_user_ids():
     users = df['UserId'].unique().tolist()
 
     return users
+
 
 if __name__ == "__main__":
    uvicorn.run(app, host="0.0.0.0", port=8080)
